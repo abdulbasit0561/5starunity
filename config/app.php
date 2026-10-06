@@ -161,8 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
-        Waavi\Translation\TranslationServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*

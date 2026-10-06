@@ -130,13 +130,14 @@ Route::get('pay.php', function () {
         // Route::group(['prefix' =>'admin','namespace'=>'Admin','as' => 'admin.'], function () {
             // Route::group(['prefix'=>'admin',  'middleware' => 'admin'], function(){
         //site settings
-        Route::auth();
+        // Auth routes are defined explicitly below with the Admin\Auth controllers;
+        // laravel/ui's Route::auth() composes a doubled namespace inside this group.
         Route::get('settings', 'AdminController@index')->name('settings');
         Route::post('settings/save', 'AdminController@saveSettings')->name('settings.save');
         // Authentication Routes...
         Route::get('/', function () {
             return redirect(route("admin.login"));
-        });
+        })->name('home');
         //pages routes
         Route::get('/pages', 'PageController@index')->name('pages');
         Route::get('/page/create', 'PageController@create')->name('page.create');
@@ -146,7 +147,7 @@ Route::get('pay.php', function () {
         Route::get('page/delete/{id}', 'PageController@delete')->name('page.delete');
 
         Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('login');
-        Route::post('login', 'Auth\AdminLoginController@login');
+        Route::post('login', 'Auth\AdminLoginController@login')->name('login.post');
         // Password Reset Routes...
         Route::get('password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('password.request');
         Route::post('password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -179,14 +180,14 @@ Route::get('pay.php', function () {
         Route::get('user/account/delete', 'UserController@deleteRquest')->name('user.account.delete');
         Route::get('user/account/deleted', 'UserController@deletedAccounts')->name('user.account.deleted');
 
-        Route::get('logout', 'Auth\AdminLoginController@logout');
+        Route::get('logout', 'Auth\AdminLoginController@logout')->name('logout');
 
-        Route::get('category/create/{type}', 'CategoryController@addCategory');
+        Route::get('category/create/{type}', 'CategoryController@addCategory')->name('category.create');
         Route::get('category/edit/category/{id}', 'CategoryController@editCategory')->name('category.edit');
         Route::get('categories/{type}', 'CategoryController@index')->name('categories');
-        Route::post('category/save', 'CategoryController@saveCategory');
-        Route::get('category/delete/{id}/{type}', 'CategoryController@delete');
-        Route::post('category/update/{id}', 'CategoryController@updateCategory');
+        Route::post('category/save', 'CategoryController@saveCategory')->name('category.save');
+        Route::get('category/delete/{id}/{type}', 'CategoryController@delete')->name('category.delete');
+        Route::post('category/update/{id}', 'CategoryController@updateCategory')->name('category.update');
 
         //products routes
         Route::get('products', 'ProductController@index')->name('products');
@@ -213,7 +214,7 @@ Route::get('pay.php', function () {
         Route::get('blog', 'BlogController@index')->name('blog');
         Route::get('blog/create', 'BlogController@create')->name('blog.create');
         Route::post('blog/save', 'BlogController@saveBlog')->name('blog.save');
-        Route::get('blog/delete/{id}', 'BlogController@delete');
+        Route::get('blog/delete/{id}', 'BlogController@delete')->name('blog.delete');
         Route::get('blog/edit/{id}', 'BlogController@edit')->name('blog.edit');
         Route::post('blog/delete_photo', 'BlogController@deletePhoto')->name('blog.delete_photo');
         Route::post('blog/update/{id}', 'BlogController@updateBlog')->name('blog.update');
@@ -223,7 +224,7 @@ Route::get('pay.php', function () {
         //Testimonial routes
         Route::get('testimonials', 'TestimonialController@index')->name('testimonials');
         Route::get('testimonials/create', 'TestimonialController@create')->name('testimonials.create');
-        Route::post('testimonials/save', 'TestimonialController@save');
+        Route::post('testimonials/save', 'TestimonialController@save')->name('testimonials.save');
         Route::get('testimonials/edit/{id}', 'TestimonialController@edit')->name('testimonial.edit');
         Route::post('testimonials/update/{id}', 'TestimonialController@update')->name('testimonials.update');
         Route::get('testimonials/delete/{id}', 'TestimonialController@delete')->name('testimonials.delete');
@@ -247,7 +248,7 @@ Route::get('pay.php', function () {
         ///admin permissions system
         Route::get('new-admin', 'AdminController@create')->name('new-admin');
         Route::post('save-admin', 'AdminController@saveAdmin')->name('save-admin');
-        Route::get('delete-admin/{id}', 'AdminController@delete')->name('save-admin');
+        Route::get('delete-admin/{id}', 'AdminController@delete')->name('delete-admin');
         Route::get('listing', 'AdminController@adminListing')->name('listing');
         Route::get('admin-edit/{id}', 'AdminController@edit')->name('admin-edit');
         Route::post('update-admin/{id}', 'AdminController@update')->name('update-admin');
@@ -265,7 +266,7 @@ Route::get('pay.php', function () {
         Route::get('promotions/create', 'PromotionsPartnerController@create')->name('promotions.create');
         Route::post('promotions/save', 'PromotionsPartnerController@save')->name('promotions.save');
         Route::get('promotions/edit/{id}', 'PromotionsPartnerController@edit')->name('promotions.edit');
-        Route::get('promotions/delete/{id}', 'PromotionsPartnerController@delete')->name('promotions.photo.delete');
+        Route::get('promotions/delete/{id}', 'PromotionsPartnerController@delete')->name('promotions.delete');
         Route::post('promotions/update/{id}', 'PromotionsPartnerController@update')->name('promotions.update');
         Route::post('promotions/photo/delete', 'PromotionsPartnerController@deletePhoto')->name('promotions.photo.delete');
 
@@ -274,7 +275,7 @@ Route::get('pay.php', function () {
         Route::get('badge/create', 'BadgeController@create')->name('coopration.create');
         Route::post('badge/save', 'BadgeController@save')->name('coopration.save');
         Route::post('badge/update/{id}', 'BadgeController@update')->name('coopration.update');
-        Route::get('badge/edit/{id}', 'BadgeController@edit');
+        Route::get('badge/edit/{id}', 'BadgeController@edit')->name('badge.edit');
         
 
 });

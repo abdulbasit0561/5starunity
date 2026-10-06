@@ -325,7 +325,8 @@ class RegisterController extends Controller
     }
     public function email_template()
     {
-        return view('mails.register_verification');
+        $email = (object) ['verification_code' => 'demo-token'];
+        return view('mails.register_verification', compact('email'));
     }
     public function deleteImage($filename)
     {

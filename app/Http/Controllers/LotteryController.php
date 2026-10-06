@@ -34,8 +34,8 @@ class LotteryController extends Controller
     public function index()
     {
         $lotteryData = Lottery::with(['lottery_contestent'])
-                        ->select('lotteries.*','lotteries.id as lotteryId','lottery_contestents.*',
-                                'lottery_contestents.id as contestentsId','lotteries.total_lots as created_lots')
+                        ->select('lotteries.*','lotteries.id as lotteryId',
+                                'lotteries.total_lots as created_lots')
                         ->selectRaw('COUNT(lottery_contestents.lottery_id) as totalClients')
                         ->leftjoin('lottery_contestents','lotteries.id','lottery_id')
                         ->groupBy('lotteries.id','lottery_contestents.lottery_id')
@@ -52,7 +52,7 @@ class LotteryController extends Controller
             $user = Auth::guard('client');
         }
         Session::flash('route', 'lottery/detail/'.$id);
-        $lotteryData = Lottery::select('lotteries.*','lotteries.total_lots as totalLots')->where('id',$id)->first();
+        $lotteryData = Lottery::select('lotteries.*','lotteries.total_lots as totalLots')->where('id',$id)->firstOrFail();
         $lotteryData1 = json_decode($lotteryData);
         $lotteryData->views=$lotteryData->views+1;
         $lotteryData->save();
@@ -314,8 +314,8 @@ class LotteryController extends Controller
         $searchString = $request->post('search');
         DB::enableQueryLog(); // Enable query log
         $lotteryData = Lottery::with(['lottery_contestent','product'])
-                            ->select('lotteries.*','lotteries.id as lotteryId','lottery_contestents.*',
-                                    'lottery_contestents.id as contestentsId','lotteries.total_lots as created_lots',"products.*")
+                            ->select('lotteries.*','lotteries.id as lotteryId',
+                                    'lotteries.total_lots as created_lots')
                             ->selectRaw('COUNT(lottery_contestents.lottery_id) as totalClients')
                             ->leftjoin('lottery_contestents','lotteries.id','lottery_id')
                             ->leftjoin('products','products.id','lotteries.pro_id')

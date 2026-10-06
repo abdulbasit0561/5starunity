@@ -59,9 +59,9 @@ class HomeController extends Controller
     {
         return view('pages.comming_soon');
     }
-    public function partner($page)
-    { 
-        $page = Page::where('page_slug',$page)->first();
+    public function partner($page = null)
+    {
+        $page = Page::where('page_slug',$page)->firstOrFail();
         return view('pages.terms',compact('page'));
     }
     public function howitworks()
@@ -77,7 +77,7 @@ class HomeController extends Controller
         $promotionsResult='';
         $categories='';
         $pageName=$page;
-        $page = Page::where('page_slug',$page)->first();
+        $page = Page::where('page_slug',$page)->firstOrFail();
         if($pageName=='promotions')
         {
             
